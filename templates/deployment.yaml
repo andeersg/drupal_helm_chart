@@ -134,6 +134,8 @@ spec:
               value: {{ .Values.ingress.hostname | quote }} # @NOTE Usikker på om denne trengs å sendes videre.
             - name: DEVELOPMENT_MODE
               value: {{ ternary "true" "false" .Values.drupalDebug | quote }}
+            - name: PHP_MEMORY_LIMIT
+              value: {{ .Values.php_memory_limit | default "512M" | quote }}
             - name: PREPROCESS_FILES
               value: {{ ternary "true" "false" .Values.drupalPreprocess | quote }}
             - name: DRUPAL_HASH_SALT
