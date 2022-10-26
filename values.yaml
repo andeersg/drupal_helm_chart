@@ -58,6 +58,11 @@ drupalEmail: user@example.com
 
 allowEmptyPassword: true
 
+cron:
+  enabled: false
+  schedule: ""
+  url: ""
+
 basicAuth:
   enabled: false
   existingSecret: ""
