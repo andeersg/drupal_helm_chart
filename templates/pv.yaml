@@ -17,4 +17,25 @@ spec:
     storage: {{ .Values.persistence.size | quote }}
   hostPath:
     path: {{ .Values.persistence.hostPath | quote }}
+{{- end }}
+---
+{{- if and .Values.persistence.enabled .Values.persistence.hostPath .Values.privateFiles.enabled (not .Values.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistenceVolume
+metadata:
+  name: {{ include "names.fullname" . }}-drupal-private
+  labels: {{- include "labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  capacity:
+    storage: {{ .Values.persistence.size | quote }}
+  hostPath:
+    path: {{ .Values.persistence.hostPath | quote }}
 {{- end -}}

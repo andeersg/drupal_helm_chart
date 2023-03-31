@@ -58,6 +58,11 @@ drupalEmail: user@example.com
 
 allowEmptyPassword: true
 
+# Set to true to enable private files.
+privateFiles:
+  enabled: false
+  size: "6Gi"
+
 cron:
   enabled: false
   schedule: ""
