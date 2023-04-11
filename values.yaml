@@ -78,6 +78,16 @@ basicAuth:
   ##
   content: ""
 
+## Enable the startup probe for faster start.
+startupProbe:
+  enabled: false
+  path: /user/login
+  initialDelaySeconds: 600
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 5
+  successThreshold: 1
+
 hostAliases:
   ## Necessary for apache-exporter to work
   ##
