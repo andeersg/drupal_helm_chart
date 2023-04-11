@@ -88,6 +88,25 @@ startupProbe:
   failureThreshold: 5
   successThreshold: 1
 
+livenessProbe:
+  enabled: false
+  path: /user/login
+  initialDelaySeconds: 600
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 5
+  successThreshold: 1
+
+readinessProbe:
+  enabled: false
+  path: /user/login
+  initialDelaySeconds: 30
+  periodSeconds: 5
+  timeoutSeconds: 1
+  failureThreshold: 5
+  successThreshold: 1
+
+
 hostAliases:
   ## Necessary for apache-exporter to work
   ##
