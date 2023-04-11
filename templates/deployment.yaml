@@ -167,6 +167,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "drupal.mariadb.fullname" . }} # Fra bitnami mariadb chart.
                   key: {{ include "drupal.databasePasswordKey" . | quote }}
+            - name: PHP_POST_MAX_SIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
+            - name: PHP_UPLOAD_MAX_FILESIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
             {{- if .Values.extraEnvVars }}
             {{- include "tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
