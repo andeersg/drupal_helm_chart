@@ -58,6 +58,9 @@ drupalEmail: user@example.com
 
 allowEmptyPassword: true
 
+# SMTP, set to true to create secret and include env variables.
+smtp: false
+
 # Set to true to enable private files.
 privateFiles:
   enabled: false

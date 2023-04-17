@@ -171,6 +171,18 @@ spec:
               value: {{ .Values.php_upload_limit | default "50M" | quote }}
             - name: PHP_UPLOAD_MAX_FILESIZE
               value: {{ .Values.php_upload_limit | default "50M" | quote }}
+            {{- if .Values.smtp }}
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "smtp"
+                  key: "password"
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "smtp"
+                  key: "username"
+            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
