@@ -312,6 +312,11 @@ persistence:
   hostPath: ""
   annotations: {}
 
+solr:
+  enabled: false
+  cloudEnabled: true
+  coreNames:
+    - dev
 # Taken from bitnami-drupal:
 mariadb:
   enabled: true
