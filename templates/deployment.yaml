@@ -171,6 +171,8 @@ spec:
               value: {{ .Values.php_upload_limit | default "50M" | quote }}
             - name: PHP_UPLOAD_MAX_FILESIZE
               value: {{ .Values.php_upload_limit | default "50M" | quote }}
+            - name: SERVICE_NGINX_CLIENT_MAX_BODY_SIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
             {{- if .Values.smtp }}
             - name: SMTP_PASSWORD
               valueFrom:
