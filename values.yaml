@@ -76,7 +76,7 @@ basicAuth:
   existingSecret: ""
   ## One row for each user
   ## e.g:
-  ## entries: |
+  ## content: |
   ##    testuser:{SHA}EWhzdhgoYJWy0z2gyzhRYlN9DSiv
   ##
   content: ""
