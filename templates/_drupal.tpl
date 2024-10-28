@@ -25,6 +25,14 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "drupal.mariadb.fullname" -}}
+{{- if .Values.fullnameOverride -}}
+    {{- printf "%s" .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+    {{- printf "%s-%s" .Release.Name "mariadb" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 {{- printf "%s-%s" .Release.Name "mariadb" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
