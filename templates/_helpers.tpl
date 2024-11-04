@@ -47,7 +47,7 @@ Selector labels
 */}}
 {{- define "kub2.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "kub2.name" . }}
-app.kubernetes.io/instance: {{  .Values.fullnameOverride | default (.Release.Name) }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
