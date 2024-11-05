@@ -13,7 +13,11 @@ Return the MariaDB Hostname
     {{- if eq .Values.mariadb.architecture "replication" }}
         {{- printf "%s-%s" (include "drupal.mariadb.fullname" .) "primary" | trunc 63 | trimSuffix "-" -}}
     {{- else -}}
-        {{- printf "%s" (include "drupal.mariadb.fullname" .) -}}
+        {{- if .Values.mariadb.fullnameOverride -}}
+            {{- printf "%s" .Values.mariadb.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+        {{- else -}}
+            {{- printf "%s" (include "drupal.mariadb.fullname" .) -}}
+        {{- end -}}
     {{- end -}}
 {{- else -}}
     {{- printf "%s" .Values.externalDatabase.host -}}
