@@ -71,9 +71,8 @@ cron:
   schedule: ""
   url: ""
 
-drush_cron:
-  enabled: false
-  schedule: ""
+# Drush cron jobs.
+cronJobs: []
 
 basicAuth:
   enabled: false
