@@ -31,6 +31,8 @@ spec:
     spec:
       template:
         spec:
+          imagePullSecrets:
+          - name: ghcr-secret
           containers:
           - name: drupal-cron
             image: {{ template "drupal.image" . }}
@@ -38,5 +40,37 @@ spec:
             args:
             - /var/www/html/vendor/bin/drush
             - cron
+            env:
+            - name: WEB_DOCUMENT_ROOT
+              value: "/var/www/html/web"
+            - name: WEB_ALIAS_DOMAIN
+              value: {{ .Values.ingress.hostname | quote }}
+            - name: PHP_MEMORY_LIMIT
+              value: {{ .Values.php_memory_limit | default "512M" | quote }}
+            - name: PREPROCESS_FILES
+              value: {{ ternary "true" "false" .Values.drupalPreprocess | quote }}
+            - name: DRUPAL_HASH_SALT
+              value: {{ .Values.drupalHashSalt | quote }}
+            - name: ALLOW_EMPTY_PASSWORD
+              value: {{ ternary "yes" "no" .Values.allowEmptyPassword | quote }}
+            - name: DRUPAL_DATABASE_HOST
+              value: {{ include "drupal.databaseHost" . | quote }}
+            - name: DRUPAL_DATABASE_PORT_NUMBER
+              value: {{ "3306" | quote }}
+            - name: DRUPAL_DATABASE_NAME
+              value: {{ .Values.mariadb.auth.database | quote }}
+            - name: DRUPAL_DATABASE_USER
+              value: {{ .Values.mariadb.auth.username | quote }}
+            - name: DRUPAL_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "drupal.mariadb.secret" . }}
+                  key: {{ include "drupal.databasePasswordKey" . | quote }}
+            - name: PHP_POST_MAX_SIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
+            - name: PHP_UPLOAD_MAX_FILESIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
+            - name: SERVICE_NGINX_CLIENT_MAX_BODY_SIZE
+              value: {{ .Values.php_upload_limit | default "50M" | quote }}
           restartPolicy: Never
 {{- end }}
