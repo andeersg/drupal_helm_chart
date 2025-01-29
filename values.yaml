@@ -71,6 +71,10 @@ cron:
   schedule: ""
   url: ""
 
+drush_cron:
+  enabled: false
+  schedule: ""
+
 basicAuth:
   enabled: false
   existingSecret: ""

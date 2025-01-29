@@ -18,3 +18,25 @@ spec:
             - {{ .Values.cron.url }}
           restartPolicy: OnFailure
 {{- end }}
+
+{{- if .Values.drush_cron.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "names.fullname" . }}-drush
+spec:
+  schedule: {{ .Values.drush_cron.schedule | default "*/30 * * * *" | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: drupal-cron
+            image: {{ template "drupal.image" . }}
+            imagePullPolicy: IfNotPresent
+            args:
+            - /var/www/html/vendor/bin/drush
+            - cron
+          restartPolicy: Never
+{{- end }}
