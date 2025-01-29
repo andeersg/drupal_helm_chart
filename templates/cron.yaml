@@ -37,9 +37,8 @@ spec:
           - name: drupal-cron
             image: {{ template "drupal.image" . }}
             imagePullPolicy: IfNotPresent
-            args:
-            - /var/www/html/vendor/bin/drush
-            - cron
+            command: ["/var/www/html/vendor/bin/drush"]
+            args: ["cron"]
             env:
             - name: WEB_DOCUMENT_ROOT
               value: "/var/www/html/web"
