@@ -136,10 +136,14 @@ spec:
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
           env:
+            - name: DEPLOYMENT_INFO
+              value: {{ printf "\"%s %s\"" .Values.image.repository .Values.image.tag }}
             - name: WEB_DOCUMENT_ROOT # @NOTE variabel for https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx.html
               value: "/var/www/html/web" # @NOTE Bør kanskje ikke hardkodes?
             - name: WEB_ALIAS_DOMAIN
               value: {{ .Values.ingress.hostname | quote }} # @NOTE Usikker på om denne trengs å sendes videre.
+            - name: DRUSH_OPTIONS_URI
+              value: {{ printf "\"https://%s\"" .Values.ingress.hostname }}
             - name: DEVELOPMENT_MODE
               value: {{ ternary "true" "false" .Values.drupalDebug | quote }}
             - name: PHP_MEMORY_LIMIT
