@@ -225,6 +225,13 @@ spec:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
               port: http
+              {{- if .Values.livenessProbe.httpHeaders }}
+              httpHeaders:
+                {{- range .Values.livenessProbe.httpHeaders }}
+                - name: {{ .name }}
+                  value: {{ .value | quote }}
+                {{- end }}
+              {{- end }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
